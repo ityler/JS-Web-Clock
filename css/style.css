@@ -58,3 +58,6 @@ html, body {
 .clockpicker-button {
   color:#000;
 }
+.hdn {
+  visibility: hidden;
+}

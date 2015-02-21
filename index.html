@@ -30,7 +30,7 @@
       <div class="container">
         <div class="row">
           <div class="jumbotron text-center">
-          <button type="button" id="btn-reset" class="btn btn-danger btn-xs" style="margin-top:-80px;">Reset</button>
+          <button type="button" id="btn-reset" class="btn btn-danger btn-xs hdn">Reset</button>
             <h3 id="txt"></h3>
             <div id="control">
               <button type="button" id="btn-alarm" class="btn btn-primary" style="margin-right:50px;">Alarm</button>
@@ -52,7 +52,6 @@
 <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/clockpicker.js"></script>
-
 <!-- <script type="text/javascript" src="js/main.js"></script> -->
 <script>
 var gdat = {};
@@ -106,6 +105,7 @@ function startClock(){
   var alm_m = "";
   alm_tm = "";
   if(gdat["alarmSet"] == 1){
+    $("#btn-reset").removeClass("hdn");
     console.log("alarm is set");
     alm_h = gdat["alarmTm"].slice(0,2);
     alm_m = gdat["alarmTm"].slice(3,5);
