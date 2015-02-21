@@ -167,10 +167,19 @@ function alarmCntl() {
 // Status message control
 function setStatus(){
   var stat = $("#status");
+  var ae = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
   if (gdat["alarmSet"] == 1){               // Alarm is set
     $("#btn-reset").removeClass("hdn");     // Enable reset button control  
-    stat.html("<span><p>Testing text</p></span>");
+    stat.html("<span><p>Alarm Set...</p></span>");
     stat.addClass("animate fadeInUp");
+    stat.one(ae,function(){
+      stat.removeClass("fadeInUp");
+      stat.addClass("fadeOut");
+      stat.one(ae,function(){
+        stat.find("p").text("");
+        stat.removeClass("fadeOut");
+      });
+    });
   } 
 };
 

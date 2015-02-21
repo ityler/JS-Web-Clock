@@ -61,3 +61,17 @@ html, body {
 .hdn {
   visibility: hidden;
 }
+
+.opa {
+  opacity: 0;
+}
+
+#status {
+  color: #6d94bf;
+  -webkit-animation-duration: 1.5s;
+}
+
+#status.fadeout{
+  -webkit-animation-duration: 3s;
+  -webkit-animation-delay: 2s;
+}
