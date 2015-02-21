@@ -45,6 +45,7 @@ html, body {
 .clockpicker {
   width:150px;
   margin: 0 auto;
+  -webkit-animation-duration: 1.5s;
 }
 
 .am-button {
@@ -67,8 +68,16 @@ html, body {
 }
 
 #status {
-  color: #6d94bf;
   -webkit-animation-duration: 1.5s;
+}
+
+#btn-reset {
+  -webkit-animation-duration: 1.5s;
+}
+
+#status p {
+  color: #6d94bf;
+  font-size: 11pt;
 }
 
 #status.fadeout{
