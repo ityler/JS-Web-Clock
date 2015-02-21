@@ -9,6 +9,7 @@
     <title>Alarm Clock &amp; Timer</title>
     <link rel='stylesheet' href='css/bootstrap.min.css' type='text/css' />
     <link href="css/clockpicker.css" rel="stylesheet"> 
+    <link href="css/animate.min.css" rel="stylesheet"> 
     <link href="css/style.css" rel="stylesheet"> 
   </head>
   <body id="home">
@@ -33,8 +34,10 @@
           <button type="button" id="btn-reset" class="btn btn-danger btn-xs hdn">Reset</button>
             <h3 id="txt"></h3>
             <div id="control">
-              <button type="button" id="btn-alarm" class="btn btn-primary" style="margin-right:50px;">Alarm</button>
-              <button type="button" id="btn-timer" class="btn btn-primary">Timer</button>
+              <div id="btn-control">
+                <button type="button" id="btn-alarm" class="btn btn-primary" style="margin-right:50px;">Alarm</button>
+                <button type="button" id="btn-timer" class="btn btn-primary">Timer</button>
+              </div>
             </div>
             <audio id="alm-snd">
               <source src="alarm_beep.mp3" type="audio/mpeg">
@@ -70,7 +73,7 @@ $('#demo-input').clockpicker({
 });
   // Alarm select handler
   $("#btn-alarm").click(function(){
-    $("#control").empty();          // Clear control(direction) area
+    $("#btn-control").empty();          // Clear control(direction) area
     alarmCntl();
 
   });
@@ -105,7 +108,7 @@ function startClock(){
   var alm_m = "";
   alm_tm = "";
   if(gdat["alarmSet"] == 1){
-    $("#btn-reset").removeClass("hdn");
+    
     console.log("alarm is set");
     alm_h = gdat["alarmTm"].slice(0,2);
     alm_m = gdat["alarmTm"].slice(3,5);
@@ -126,39 +129,53 @@ function startClock(){
   var t = setTimeout(function(){startClock()},500);
 }
 
+// Configure clock appearance (single digits)
 function checkClock(i) {
   if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
   return i;
 };
 
-
-
+// Alarm control 
 function alarmCntl() {
   var os = '<div class="input-group clockpicker">\
               <input type="text" class="form-control" value="06:32">\
               <span class="input-group-addon">\
                 <span class="glyphicon glyphicon-time"></span>\
               </span>\
-            </div>';
+            </div>\
+            <div id="status"></div>';
   $("#control").html(os);
   var ai = $('.clockpicker').clockpicker({
     placement  : 'bottom',
     align      : 'left',
     donetext   : 'Set',
     afterDone  : function(){
-      var almTime = $(".clockpicker").children(".form-control").val();
-      gdat = {
+      var almTime = $(".clockpicker").children(".form-control").val();  
+      gdat = {                                // Set global data
         alarmSet : 1,
         alarmTm  : almTime
       }
+      setStatus();
     },
     beforeShow : function(x){
-      getAlmTim();
+      getAlmTim();                            // Get alarm time
 
     },
   });
 };
 
+// Status message control
+function setStatus(){
+  var stat = $("#status");
+  if (gdat["alarmSet"] == 1){               // Alarm is set
+    $("#btn-reset").removeClass("hdn");     // Enable reset button control  
+    stat.html("<span><p>Testing text</p></span>");
+    stat.addClass("animate fadeInUp");
+  } 
+};
+
+
+// Get user set alarm time
 function getAlmTim(){
   var inp = $(".clockpicker").children(".form-control").val();
   console.log(inp); 
