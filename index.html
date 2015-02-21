@@ -59,6 +59,7 @@
 <script>
 var gdat = {};
 var alms = new Audio('alarm_beep.mp3');
+var ae = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
 
 $(document).ready(function() {
   startClock();     // Initialize clock
@@ -74,8 +75,8 @@ $('#demo-input').clockpicker({
   // Alarm select handler
   $("#btn-alarm").click(function(){
     $("#btn-control").empty();          // Clear control(direction) area
+    addBtn("btn-reset");
     alarmCntl();
-
   });
 
   // Reset click handler
@@ -145,6 +146,7 @@ function alarmCntl() {
             </div>\
             <div id="status"></div>';
   $("#control").html(os);
+  $(".clockpicker").addClass("animate fadeIn");
   var ai = $('.clockpicker').clockpicker({
     placement  : 'bottom',
     align      : 'left',
@@ -164,10 +166,19 @@ function alarmCntl() {
   });
 };
 
+// Add button to dom
+function addBtn(x){
+  var btn = $("#"+x);
+  btn.removeClass("hdn");
+  btn.addClass("animate fadeIn");
+  btn.one(ae,function(){
+    btn.removeClass("animate fadIn");
+  });
+};
+
 // Status message control
 function setStatus(){
   var stat = $("#status");
-  var ae = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
   if (gdat["alarmSet"] == 1){               // Alarm is set
     $("#btn-reset").removeClass("hdn");     // Enable reset button control  
     stat.html("<span><p>Alarm Set...</p></span>");
@@ -176,7 +187,7 @@ function setStatus(){
       stat.removeClass("fadeInUp");
       stat.addClass("fadeOut");
       stat.one(ae,function(){
-        stat.find("p").text("");
+        stat.find("p").addClass("hdn")
         stat.removeClass("fadeOut");
       });
     });
