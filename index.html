@@ -36,7 +36,7 @@
               <button type="button" id="btn-alarm" class="btn btn-primary" style="margin-right:50px;">Alarm</button>
               <button type="button" id="btn-timer" class="btn btn-primary">Timer</button>
             </div>
-			<audio id="alm-snd">
+            <audio id="alm-snd">
               <source src="alarm_beep.mp3" type="audio/mpeg">
             </audio>
           </div>
@@ -52,6 +52,126 @@
 <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/clockpicker.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
+
+<!-- <script type="text/javascript" src="js/main.js"></script> -->
+<script>
+var gdat = {};
+var alms = new Audio('alarm_beep.mp3');
+
+$(document).ready(function() {
+  startClock();     // Initialize clock
+  
+$('.clockpicker').clockpicker()
+    .find('input').change(function(){
+        // TODO: time changed
+        console.log(this.value);
+    });
+$('#demo-input').clockpicker({
+    autoclose: true
+});
+  // Alarm select handler
+  $("#btn-alarm").click(function(){
+    $("#control").empty();          // Clear control(direction) area
+    alarmCntl();
+
+  });
+
+  // Reset click handler
+  $("#btn-reset").click(function(){
+    location.reload();      // Reload page (from cache)
+  });
+});
+
+/* Helpers */
+function startClock(){
+  var today = new Date();       // Date/time obj
+  var tdy = "";                 // Today date
+  var dd = today.getDate();     // Day
+  var mm = today.getMonth()+1;  // Month
+  var yy = today.getFullYear(); // Year
+  if (dd < 10){
+    dd = '0'+ dd;
+  }
+  if (mm < 10){
+    mm = '0'+ mm;
+  }
+  tdy = mm+'/'+dd+'/'+yy;     // Format date output
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  m = checkClock(m);
+  s = checkClock(s);
+  gdat["curTm"] = ""+h+m;
+  var alm_h = "";
+  var alm_m = "";
+  alm_tm = "";
+  if(gdat["alarmSet"] == 1){
+    console.log("alarm is set");
+    alm_h = gdat["alarmTm"].slice(0,2);
+    alm_m = gdat["alarmTm"].slice(3,5);
+    alm_tm = alm_h+alm_m;
+    if(alm_tm == (""+h+m)){
+      console.log("Alarm match!");
+      alms.play();
+    }
+  } else {
+    //console.log("alarm not set");
+  }
+
+ // h = fmtHr(h);
+ // var mrd = h.slice(-2);
+ // h = h.slice(0,-2);
+  $("#date").children('h3').text(tdy);
+  $("#real-time-clock").children('h1').text(h +":"+m+":"+s);
+  var t = setTimeout(function(){startClock()},500);
+}
+
+function checkClock(i) {
+  if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+};
+
+
+
+function alarmCntl() {
+  var os = '<div class="input-group clockpicker">\
+              <input type="text" class="form-control" value="06:32">\
+              <span class="input-group-addon">\
+                <span class="glyphicon glyphicon-time"></span>\
+              </span>\
+            </div>';
+  $("#control").html(os);
+  var ai = $('.clockpicker').clockpicker({
+    placement  : 'bottom',
+    align      : 'left',
+    donetext   : 'Set',
+    afterDone  : function(){
+      var almTime = $(".clockpicker").children(".form-control").val();
+      gdat = {
+        alarmSet : 1,
+        alarmTm  : almTime
+      }
+    },
+    beforeShow : function(x){
+      getAlmTim();
+
+    },
+  });
+};
+
+function getAlmTim(){
+  var inp = $(".clockpicker").children(".form-control").val();
+  console.log(inp); 
+  var hr = $("clockpicker-span-hours").text();
+  var mn = $("clockpicker-span-minutes").text();
+}
+
+// Not currently used (12 hour clock conversion)
+function fmtHr(h_24) {
+    var h = h_24 % 12;
+    if (h === 0) h = 12;
+    return (h < 10 ? '0' : '') + h + (h_24 < 12 ? 'am' : 'pm');
+};
+</script>
   </body>
 </html>
