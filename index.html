@@ -162,10 +162,6 @@ function alarmCntl() {
       }
       setStatus();
     },
-    beforeShow : function(x){
-      getAlmTim();                            // Get alarm time
-
-    },
   });
 };
 
@@ -196,15 +192,6 @@ function setStatus(){
     });
   } 
 };
-
-
-// Get user set alarm time
-function getAlmTim(){
-  var inp = $(".clockpicker").children(".form-control").val();
-  console.log(inp); 
-  var hr = $("clockpicker-span-hours").text();
-  var mn = $("clockpicker-span-minutes").text();
-}
 
 // Not currently used (12 hour clock conversion)
 function fmtHr(h_24) {
