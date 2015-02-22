@@ -23,6 +23,7 @@
               </div>
               <div id="real-time-clock">
                 <h1></h1>
+                <span id="alarm-tm"></span>
               </div>
             </div>
           </div>
@@ -39,6 +40,7 @@
                 <button type="button" id="btn-timer" class="btn btn-primary">Timer</button>
               </div>
             </div>
+            <div id="status"><span><p class="hdn">status</p></span></div>
             <audio id="alm-snd">
               <source src="alarm_beep.mp3" type="audio/mpeg">
             </audio>
@@ -69,9 +71,11 @@ $('.clockpicker').clockpicker()
         // TODO: time changed
         console.log(this.value);
     });
+
 $('#demo-input').clockpicker({
     autoclose: true
 });
+
   // Alarm select handler
   $("#btn-alarm").click(function(){
     $("#btn-control").empty();          // Clear control(direction) area
@@ -143,8 +147,7 @@ function alarmCntl() {
               <span class="input-group-addon">\
                 <span class="glyphicon glyphicon-time"></span>\
               </span>\
-            </div>\
-            <div id="status"></div>';
+            </div>';
   $("#control").html(os);
   $(".clockpicker").addClass("animate fadeIn");
   var ai = $('.clockpicker').clockpicker({

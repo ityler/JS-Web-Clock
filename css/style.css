@@ -67,6 +67,10 @@ html, body {
   opacity: 0;
 }
 
+.alarm-tm {
+
+}
+
 #status {
   -webkit-animation-duration: 1.5s;
 }
