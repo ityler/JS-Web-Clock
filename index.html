@@ -79,6 +79,7 @@ $(document).ready(function() {
   });
 });
 
+
 /* Helpers */
 function startClock(){
   var today = new Date();       // Date/time obj
@@ -86,16 +87,12 @@ function startClock(){
   var dd = today.getDate();     // Day
   var mm = today.getMonth()+1;  // Month
   var yy = today.getFullYear(); // Year
-  if (dd < 10){
-    dd = '0'+ dd;
-  }
-  if (mm < 10){
-    mm = '0'+ mm;
-  }
-  tdy = mm+'/'+dd+'/'+yy;     // Format date output
-  var h = today.getHours();
-  var m = today.getMinutes();
-  var s = today.getSeconds();
+  var h = today.getHours();     // Hours
+  var m = today.getMinutes();   // Mins
+  var s = today.getSeconds();   // Secs
+  dd = checkClock(dd);          // Format date output
+  mm = checkClock(mm);
+  tdy = mm+'/'+dd+'/'+yy;     
   m = checkClock(m);
   s = checkClock(s);
   gdat["curTm"] = ""+h+m;
@@ -140,7 +137,7 @@ function alarmCntl() {
   var ai = $('.clockpicker').clockpicker({
     placement  : 'bottom',
     align      : 'left',
-    donetext   : 'Set',
+    donetext   : 'Set Alarm',
     afterDone  : function(){
       var almTime = $(".clockpicker").children(".form-control").val();  
       gdat = {                                // Set global data
