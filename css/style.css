@@ -71,8 +71,35 @@ html, body {
 
 }
 
+.panel {
+  margin-bottom:10px;
+}
+
+.panel-body {
+  padding-bottom:5px;
+}
+
+/* No select */
+.ns {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none; 
+  -o-user-select:none;
+  user-select: none;
+  outline: none;
+}
+
 #status {
   -webkit-animation-duration: 1.5s;
+}
+
+#alarm-tm {
+  -webkit-animation-duration: 1.5s; 
+}
+
+#alarm-tm p {
+  color: #5cb85c;
+  font-weight: bold;
 }
 
 #btn-reset {
@@ -80,7 +107,7 @@ html, body {
 }
 
 #status p {
-  color: #6d94bf;
+  color: #5cb85c;
   font-size: 11pt;
 }
 

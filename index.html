@@ -23,7 +23,7 @@
               </div>
               <div id="real-time-clock">
                 <h1></h1>
-                <span id="alarm-tm"></span>
+                <div id="alarm-tm" class="hdn"><p>No Alarm set</p></div>
               </div>
             </div>
           </div>
@@ -65,16 +65,6 @@ var ae = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animat
 
 $(document).ready(function() {
   startClock();     // Initialize clock
-  
-$('.clockpicker').clockpicker()
-    .find('input').change(function(){
-        // TODO: time changed
-        console.log(this.value);
-    });
-
-$('#demo-input').clockpicker({
-    autoclose: true
-});
 
   // Alarm select handler
   $("#btn-alarm").click(function(){
@@ -113,17 +103,14 @@ function startClock(){
   var alm_m = "";
   alm_tm = "";
   if(gdat["alarmSet"] == 1){
-    
-    console.log("alarm is set");
     alm_h = gdat["alarmTm"].slice(0,2);
     alm_m = gdat["alarmTm"].slice(3,5);
     alm_tm = alm_h+alm_m;
     if(alm_tm == (""+h+m)){
-      console.log("Alarm match!");
       alms.play();
     }
-  } else {
-    //console.log("alarm not set");
+  } { 
+    // For countdown abilities
   }
 
  // h = fmtHr(h);
@@ -143,7 +130,7 @@ function checkClock(i) {
 // Alarm control 
 function alarmCntl() {
   var os = '<div class="input-group clockpicker">\
-              <input type="text" class="form-control" value="06:32">\
+              <input type="text" class="form-control ns" value="06:32">\
               <span class="input-group-addon">\
                 <span class="glyphicon glyphicon-time"></span>\
               </span>\
@@ -171,7 +158,7 @@ function addBtn(x){
   btn.removeClass("hdn");
   btn.addClass("animate fadeIn");
   btn.one(ae,function(){
-    btn.removeClass("animate fadIn");
+    btn.removeClass("animate fadeIn");
   });
 };
 
@@ -189,6 +176,13 @@ function setStatus(){
         stat.find("p").addClass("hdn")
         stat.removeClass("fadeOut");
       });
+    });
+    var almDisp = $("#alarm-tm");
+    almDisp.find("p").text("Alarm Set: "+gdat['alarmTm']);
+    almDisp.removeClass("hdn"); 
+    almDisp.addClass("animate fadeIn");
+    almDisp.one(ae,function(){
+      almDisp.removeClass("animate fadeIn");
     });
   } 
 };
