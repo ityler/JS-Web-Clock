@@ -73,10 +73,35 @@ $(document).ready(function() {
     alarmCntl();
   });
 
+  // Timer click handler
+  $("#btn-timer").click(function(){
+    $("#btn-control").empty();          // Clear control(direction) area
+
+  });
+
   // Reset click handler
   $("#btn-reset").click(function(){
     location.reload();      // Reload page (from cache)
   });
+});
+
+
+$(function(){
+    var fiveMinutes = 60 * 5,
+        display = $('#time'),
+        mins, seconds;
+    setInterval(function() {
+        mins = parseInt(fiveMinutes / 60)
+        seconds = parseInt(fiveMinutes % 60);
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+        
+        display.text(mins + ":" + seconds);
+        fiveMinutes--;
+        
+        if (fiveMinutes < 0) {
+            fiveMinutes = 60 * 5;
+        }
+    }, 1000);
 });
 
 
