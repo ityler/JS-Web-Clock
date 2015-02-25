@@ -183,7 +183,7 @@ function timerCntl(){
   proc["m"] = 59;
   proc["s"] = 59;
   var os = "";
-  os = "<div class='tmr-head'><p>Hrs</p><p>Mins</p><p>Secs</p></div><div id='tmr-cntls'><form class='form-inline'>"; 
+  os = "<div class='tmr-head'><p style='padding-left:25px;'>Hrs</p><p>Mins</p><p>Secs</p></div><div id='tmr-cntls'><form class='form-inline'>"; 
   for(var key in proc){   // Hours,mins,sec selbox control
     var mx = proc[key];   // Proc limit
     os += "<select id='tmr-"+key+"' class='form-control tmr-sel'>";

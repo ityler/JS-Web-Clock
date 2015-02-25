@@ -64,11 +64,23 @@ html, body {
 }
 
 .tmr-head {
-
+  float: left;
+  width: 100%; 
+  margin-left: 27%;
 }
 
 .tmr-head p{
+  float: left;
+  padding-left: 46px;
+  margin-bottom: 5px;
+}
 
+.tmr-sel {
+  margin-left: 20px;
+}
+
+.form-inline {
+  padding-right: 15px;
 }
 
 .opa {
@@ -101,9 +113,6 @@ html, body {
 
 }
 
-.tmr-sel {
-
-}
 
 #status {
   -webkit-animation-duration: 1.5s;
