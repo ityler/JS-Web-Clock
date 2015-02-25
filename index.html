@@ -179,18 +179,21 @@ function alarmCntl() {
 
 // Timer control
 function timerCntl(){
-  var proc = [23,59,59];
+  var proc = [];
+  proc["h"] = 23;
+  proc["m"] = 59;
+  proc["s"] = 59;
   var os = "";
-  for(var x = 0, len = proc.length; x < len; x++){
-    os += "<select class='form-control tmr-sel'>";
-    var mx = proc[x];  
+  for(var key in proc){   // Hours,mins,sec selbox control
+    var mx = proc[key];   // Proc limit
+    os += "<select id='tmr-"+key+"' class='form-control tmr-sel'>";
     for(var i = 0; i <= mx; i++){
-      if(i<10){ i="0"+i; } 
+      if(i<10){ i="0"+i; } // Visual choice fix
       os += "<option val='"+i+"'>"+i+"</option>";
     } 
     os += "</select>";   
   }
-  $("#control").addClass("tmr");
+  $("#control").addClass("tmr"); // Control has timer class
   $("#control").html(os);
 };
 
