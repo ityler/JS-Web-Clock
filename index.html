@@ -65,6 +65,8 @@ var ae = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animat
 
 $(document).ready(function() {
   startClock();     // Initialize clock
+  // Initial load
+  $("#wrap").addClass("animate fadeIn");
 
   // Alarm select handler
   $("#btn-alarm").click(function(){

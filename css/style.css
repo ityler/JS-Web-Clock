@@ -106,6 +106,10 @@ html, body {
   -webkit-animation-duration: 1.5s;
 }
 
+#wrap {
+  -webkit-animation-duration: 1.5s;
+}
+
 #status p {
   color: #5cb85c;
   font-size: 11pt;
