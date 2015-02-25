@@ -78,7 +78,8 @@ $(document).ready(function() {
   // Timer click handler
   $("#btn-timer").click(function(){
     $("#btn-control").empty();          // Clear control(direction) area
-
+    addBtn("btn-reset");
+    timerCntl();
   });
 
   // Reset click handler
@@ -174,6 +175,23 @@ function alarmCntl() {
       setStatus();
     },
   });
+};
+
+// Timer control
+function timerCntl(){
+  var proc = [23,59,59];
+  var os = "";
+  for(var x = 0, len = proc.length; x < len; x++){
+    os += "<select class='form-control tmr-sel'>";
+    var mx = proc[x];  
+    for(var i = 0; i <= mx; i++){
+      if(i<10){ i="0"+i; } 
+      os += "<option val='"+i+"'>"+i+"</option>";
+    } 
+    os += "</select>";   
+  }
+  $("#control").addClass("tmr");
+  $("#control").html(os);
 };
 
 // Add button to dom

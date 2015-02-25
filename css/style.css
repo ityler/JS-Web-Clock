@@ -89,6 +89,16 @@ html, body {
   outline: none;
 }
 
+.tmr {
+  padding-left: 28.5%;
+}
+
+.tmr-sel {
+  width:70px;
+  float: left;
+  margin-right: 15px;
+}
+
 #status {
   -webkit-animation-duration: 1.5s;
 }
