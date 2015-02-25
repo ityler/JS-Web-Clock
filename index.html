@@ -33,7 +33,6 @@
         <div class="row">
           <div class="jumbotron text-center">
           <button type="button" id="btn-reset" class="btn btn-danger btn-xs hdn">Reset</button>
-            <h3 id="txt"></h3>
             <div id="control">
               <div id="btn-control">
                 <button type="button" id="btn-alarm" class="btn btn-primary" style="margin-right:50px;">Alarm</button>
@@ -184,6 +183,7 @@ function timerCntl(){
   proc["m"] = 59;
   proc["s"] = 59;
   var os = "";
+  os = "<div class='tmr-head'><p>Hrs</p><p>Mins</p><p>Secs</p></div><div id='tmr-cntls'><form class='form-inline'>"; 
   for(var key in proc){   // Hours,mins,sec selbox control
     var mx = proc[key];   // Proc limit
     os += "<select id='tmr-"+key+"' class='form-control tmr-sel'>";
@@ -193,6 +193,7 @@ function timerCntl(){
     } 
     os += "</select>";   
   }
+  os += "</form></div>";
   $("#control").addClass("tmr"); // Control has timer class
   $("#control").html(os);
 };

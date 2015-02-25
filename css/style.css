@@ -63,6 +63,14 @@ html, body {
   visibility: hidden;
 }
 
+.tmr-head {
+
+}
+
+.tmr-head p{
+
+}
+
 .opa {
   opacity: 0;
 }
@@ -90,13 +98,11 @@ html, body {
 }
 
 .tmr {
-  padding-left: 28.5%;
+
 }
 
 .tmr-sel {
-  width:70px;
-  float: left;
-  margin-right: 15px;
+
 }
 
 #status {
@@ -113,6 +119,7 @@ html, body {
 }
 
 #btn-reset {
+  margin-bottom: 20px;
   -webkit-animation-duration: 1.5s;
 }
 
