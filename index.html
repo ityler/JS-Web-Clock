@@ -56,7 +56,6 @@
 <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/clockpicker.js"></script>
-<!-- <script type="text/javascript" src="js/main.js"></script> -->
 <script>
 var gdat = {};
 var alms = new Audio('alarm_beep.mp3');
@@ -106,6 +105,11 @@ $(function(){
     }, 1000);
 });
 
+// Alarm control
+function alarm(){
+  alms.play();    // Play alarm sound
+  // Show snooze/off control buttons
+};
 
 /* Helpers */
 function startClock(){
@@ -131,7 +135,7 @@ function startClock(){
     alm_m = gdat["alarmTm"].slice(3,5);
     alm_tm = alm_h+alm_m;
     if(alm_tm == (""+h+m)){
-      alms.play();
+      alarm();      // Start alarm sequence
     }
   } { 
     // For countdown abilities
