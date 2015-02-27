@@ -9,7 +9,8 @@
     <title>Alarm Clock &amp; Timer</title>
     <link rel='stylesheet' href='css/bootstrap.min.css' type='text/css' />
     <link href="css/clockpicker.css" rel="stylesheet"> 
-    <link href="css/animate.min.css" rel="stylesheet"> 
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">  
     <link href="css/style.css" rel="stylesheet"> 
   </head>
   <body id="home">
@@ -24,6 +25,7 @@
               <div id="real-time-clock">
                 <h1></h1>
                 <div id="alarm-tm" class="hdn"><p>No Alarm set</p></div>
+                <button type="button" id="btn-debug" class="js-open-modal" href="#" data-modal-id="popup"> Click me</button>
               </div>
             </div>
           </div>
@@ -32,7 +34,7 @@
       <div class="container">
         <div class="row">
           <div class="jumbotron text-center">
-          <button type="button" id="btn-reset" class="btn btn-danger btn-xs hdn">Reset</button>
+            <button type="button" id="btn-reset" class="btn btn-danger btn-xs hdn">Reset</button>
             <div id="control">
               <div id="btn-control">
                 <button type="button" id="btn-alarm" class="btn btn-primary" style="margin-right:50px;">Alarm</button>
@@ -43,6 +45,18 @@
             <audio id="alm-snd">
               <source src="alarm_beep.mp3" type="audio/mpeg">
             </audio>
+            <div id="popup" class="modal-box">  
+                <header>
+                <a href="#" class="js-modal-close close">×</a>
+                    <h3><a href="http://www.jqueryscript.net/tags.php?/Modal/">Modal</a> Title</h3>
+                </header>
+              <div class="modal-body">
+                <p>Modal Body</p>
+                </div>
+              <footer>
+              <a href="#" class="js-modal-close">Close Button</a>
+                </footer>
+            </div>
           </div>
         </div>
       </div>
@@ -54,6 +68,7 @@
       </div>
     </div>
 <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/clockpicker.js"></script>
 <script>
@@ -84,6 +99,32 @@ $(document).ready(function() {
   $("#btn-reset").click(function(){
     location.reload();      // Reload page (from cache)
   });
+
+  // Debug click handler
+  var at =  ("<div class='modal-overlay js-modal-close'></div>");
+  $("#btn-debug").click(function(){
+    $("body").append(at);
+    $(".modal-overlay").fadeTo(500, 0.7);
+    //$(".js-modalbox").fadeIn(500);
+    var modalBox = $(this).attr('data-modal-id');
+    $('#'+modalBox).fadeIn($(this).data());
+  });  
+  
+  // Modal close handler
+  $(".js-modal-close, .modal-overlay").click(function() {
+    $(".modal-box, .modal-overlay").fadeOut(500, function() {
+      $(".modal-overlay").remove();
+    });
+  });
+  
+  // adjust modal on window resize
+  $(window).resize(function(){
+    $(".modal-box").css({
+      top: ($(window).height() - $(".modal-box").outerHeight()) / 2,
+      left: ($(window).width() - $(".modal-box").outerWidth()) / 2
+    });
+  });
+  $(window).resize();
 });
 
 
@@ -108,6 +149,7 @@ $(function(){
 // Alarm control
 function alarm(){
   alms.play();    // Play alarm sound
+  $("")
   // Show snooze/off control buttons
 };
 
