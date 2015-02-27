@@ -100,15 +100,12 @@ $(document).ready(function() {
     location.reload();      // Reload page (from cache)
   });
 
-  // Debug click handler
-  var at =  ("<div class='modal-overlay js-modal-close'></div>");
-  $("#btn-debug").click(function(){
-    $("body").append(at);
-    $(".modal-overlay").fadeTo(500, 0.7);
-    //$(".js-modalbox").fadeIn(500);
-    var modalBox = $(this).attr('data-modal-id');
-    $('#'+modalBox).fadeIn($(this).data());
-  });  
+  $(".js-modal-close").click(function(){
+    gdat["alarmSet"] = 0;
+    alms.pause();
+    alms.currentTime = 0;
+  });
+ 
   
   // Modal close handler
   $(".js-modal-close, .modal-overlay").click(function() {
@@ -136,10 +133,8 @@ $(function(){
         mins = parseInt(fiveMinutes / 60)
         seconds = parseInt(fiveMinutes % 60);
         seconds = (seconds < 10) ? "0" + seconds : seconds;
-        
         display.text(mins + ":" + seconds);
         fiveMinutes--;
-        
         if (fiveMinutes < 0) {
             fiveMinutes = 60 * 5;
         }
@@ -149,8 +144,9 @@ $(function(){
 // Alarm control
 function alarm(){
   alms.play();    // Play alarm sound
-  $("")
-  // Show snooze/off control buttons
+  if(gdat["alarmOn"] == 1){ // Alarm modal not active
+    showModal();          // Show alarm modal controls
+  }
 };
 
 /* Helpers */
@@ -215,12 +211,26 @@ function alarmCntl() {
       var almTime = $(".clockpicker").children(".form-control").val();  
       gdat = {                                // Set global data
         alarmSet : 1,
-        alarmTm  : almTime
+        alarmTm  : almTime,
+        alarmOn : 1
       }
       setStatus();
     },
   });
 };
+
+ // Alarm modal
+  function showModal(){
+    var at =  ("<div class='modal-overlay js-modal-close'></div>");
+    $("body").append(at);
+    console.log("Appended");
+    $(".modal-overlay").fadeTo(500, 0.7);
+    //$(".js-modalbox").fadeIn(500);
+    $('#popup').fadeIn($(this).data());
+    console.log("Fadein");
+    gdat["alarmOn"] = 0;
+  };  
+
 
 // Timer control
 function timerCntl(){
