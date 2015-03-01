@@ -25,7 +25,6 @@
               <div id="real-time-clock">
                 <h1></h1>
                 <div id="alarm-tm" class="hdn"><p>No Alarm set</p></div>
-                <button type="button" id="btn-debug" class="js-open-modal" href="#" data-modal-id="popup"> Click me</button>
               </div>
             </div>
           </div>
@@ -46,16 +45,14 @@
               <source src="alarm_beep.mp3" type="audio/mpeg">
             </audio>
             <div id="popup" class="modal-box">  
-                <header>
-                <a href="#" class="js-modal-close close">×</a>
-                    <h3><a href="http://www.jqueryscript.net/tags.php?/Modal/">Modal</a> Title</h3>
-                </header>
+              <header>
+                <a href="#" class="modal-close close">×</a>
+                <h3>ALARM</h3>
+              </header>
               <div class="modal-body">
-                <p>Modal Body</p>
-                </div>
-              <footer>
-              <a href="#" class="js-modal-close">Close Button</a>
-                </footer>
+                <button type="button" class="modal-close">OFF</button>
+                <button type="button" class="modal-">Snooze 5min.</button>
+              </div>
             </div>
           </div>
         </div>
@@ -100,15 +97,16 @@ $(document).ready(function() {
     location.reload();      // Reload page (from cache)
   });
 
-  $(".js-modal-close").click(function(){
+  $(".modal-close").click(function(){
     gdat["alarmSet"] = 0;
     alms.pause();
     alms.currentTime = 0;
+    setStatus(0);         // Clear alarm display status
   });
  
   
   // Modal close handler
-  $(".js-modal-close, .modal-overlay").click(function() {
+  $(".modal-close, .modal-overlay").click(function() {
     $(".modal-box, .modal-overlay").fadeOut(500, function() {
       $(".modal-overlay").remove();
     });
@@ -122,32 +120,10 @@ $(document).ready(function() {
     });
   });
   $(window).resize();
+
 });
 
 
-$(function(){
-    var fiveMinutes = 60 * 5,
-        display = $('#time'),
-        mins, seconds;
-    setInterval(function() {
-        mins = parseInt(fiveMinutes / 60)
-        seconds = parseInt(fiveMinutes % 60);
-        seconds = (seconds < 10) ? "0" + seconds : seconds;
-        display.text(mins + ":" + seconds);
-        fiveMinutes--;
-        if (fiveMinutes < 0) {
-            fiveMinutes = 60 * 5;
-        }
-    }, 1000);
-});
-
-// Alarm control
-function alarm(){
-  alms.play();    // Play alarm sound
-  if(gdat["alarmOn"] == 1){ // Alarm modal not active
-    showModal();          // Show alarm modal controls
-  }
-};
 
 /* Helpers */
 function startClock(){
@@ -175,25 +151,13 @@ function startClock(){
     if(alm_tm == (""+h+m)){
       alarm();      // Start alarm sequence
     }
-  } { 
-    // For countdown abilities
   }
-
- // h = fmtHr(h);
- // var mrd = h.slice(-2);
- // h = h.slice(0,-2);
   $("#date").children('h3').text(tdy);
   $("#real-time-clock").children('h1').text(h +":"+m+":"+s);
   var t = setTimeout(function(){startClock()},500);
 }
 
-// Configure clock appearance (single digits)
-function checkClock(i) {
-  if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
-  return i;
-};
-
-// Alarm control 
+// Choose alarm controller  
 function alarmCntl() {
   var os = '<div class="input-group clockpicker">\
               <input type="text" class="form-control ns" value="06:32">\
@@ -214,23 +178,84 @@ function alarmCntl() {
         alarmTm  : almTime,
         alarmOn : 1
       }
-      setStatus();
+      setStatus(1);
     },
   });
 };
 
- // Alarm modal
-  function showModal(){
-    var at =  ("<div class='modal-overlay js-modal-close'></div>");
-    $("body").append(at);
-    console.log("Appended");
-    $(".modal-overlay").fadeTo(500, 0.7);
-    //$(".js-modalbox").fadeIn(500);
-    $('#popup').fadeIn($(this).data());
-    console.log("Fadein");
-    gdat["alarmOn"] = 0;
-  };  
+// Sound the alarm!
+function alarm(){
+  alms.play();              // Play alarm sound
+  if(gdat["alarmOn"] == 1){ // Alarm modal not active
+    showModal();            // Show alarm modal controls
+  }
+};
 
+// Alarm modal 
+function showModal(){
+  var at =  ("<div class='modal-overlay modal-close'></div>");
+  $("body").append(at);
+  console.log("Appended");
+  $(".modal-overlay").fadeTo(500, 0.7);
+  $('#popup').fadeIn($(this).data());
+  console.log("Fadein");
+  gdat["alarmOn"] = 0;
+};  
+
+// Add button to dom
+function addBtn(x){
+  var btn = $("#"+x);
+  btn.removeClass("hdn");
+  btn.addClass("animate fadeIn");
+  btn.one(ae,function(){
+    btn.removeClass("animate fadeIn");
+  });
+};
+
+// Status message control
+function setStatus(x){
+  var almDisp = $("#alarm-tm");
+  if (x == 0){        // Clear status
+    almDisp.find("p").text("Alarm Not Set");
+    almDisp.addClass("hdn");
+  } else {
+    var stat = $("#status");
+    if (gdat["alarmSet"] == 1){               // Alarm is set
+      $("#btn-reset").removeClass("hdn");     // Enable reset button control  
+      stat.html("<span><p>Alarm Set...</p></span>");
+      stat.addClass("animate fadeInUp");
+      stat.one(ae,function(){
+        stat.removeClass("fadeInUp");
+        stat.addClass("fadeOut");
+        stat.one(ae,function(){
+          stat.find("p").addClass("hdn")
+          stat.removeClass("fadeOut");
+        });
+      });
+      almDisp.find("p").text("Alarm Set: "+gdat['alarmTm']);
+      almDisp.removeClass("hdn"); 
+      almDisp.addClass("animate fadeIn");
+      almDisp.one(ae,function(){
+        almDisp.removeClass("animate fadeIn");
+      });
+    }
+  }  
+};
+
+// Configure clock appearance (single digits)
+function checkClock(i) {
+  if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+};
+
+/* NOT CURRENTLY USED */
+
+// Not currently used (12 hour clock conversion)
+function fmtHr(h_24) {
+    var h = h_24 % 12;
+    if (h === 0) h = 12;
+    return (h < 10 ? '0' : '') + h + (h_24 < 12 ? 'am' : 'pm');
+};
 
 // Timer control
 function timerCntl(){
@@ -251,50 +276,10 @@ function timerCntl(){
   }
   os += "</form></div>";
   $("#control").addClass("tmr"); // Control has timer class
-  $("#control").html(os);
+  $("#control").html(os); // Append to DOM
 };
 
-// Add button to dom
-function addBtn(x){
-  var btn = $("#"+x);
-  btn.removeClass("hdn");
-  btn.addClass("animate fadeIn");
-  btn.one(ae,function(){
-    btn.removeClass("animate fadeIn");
-  });
-};
 
-// Status message control
-function setStatus(){
-  var stat = $("#status");
-  if (gdat["alarmSet"] == 1){               // Alarm is set
-    $("#btn-reset").removeClass("hdn");     // Enable reset button control  
-    stat.html("<span><p>Alarm Set...</p></span>");
-    stat.addClass("animate fadeInUp");
-    stat.one(ae,function(){
-      stat.removeClass("fadeInUp");
-      stat.addClass("fadeOut");
-      stat.one(ae,function(){
-        stat.find("p").addClass("hdn")
-        stat.removeClass("fadeOut");
-      });
-    });
-    var almDisp = $("#alarm-tm");
-    almDisp.find("p").text("Alarm Set: "+gdat['alarmTm']);
-    almDisp.removeClass("hdn"); 
-    almDisp.addClass("animate fadeIn");
-    almDisp.one(ae,function(){
-      almDisp.removeClass("animate fadeIn");
-    });
-  } 
-};
-
-// Not currently used (12 hour clock conversion)
-function fmtHr(h_24) {
-    var h = h_24 % 12;
-    if (h === 0) h = 12;
-    return (h < 10 ? '0' : '') + h + (h_24 < 12 ? 'am' : 'pm');
-};
 </script>
   </body>
 </html>
