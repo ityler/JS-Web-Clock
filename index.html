@@ -51,7 +51,7 @@
               </header>
               <div class="modal-body">
                 <button type="button" class="modal-close">OFF</button>
-                <button type="button" class="modal-">Snooze 5min.</button>
+                <button type="button" class="modal-snz">Snooze 5min.</button>
               </div>
             </div>
           </div>
@@ -103,6 +103,13 @@ $(document).ready(function() {
     alms.currentTime = 0;
     setStatus(0);         // Clear alarm display status
   });
+
+  $(".modal-snz").click(function(){
+    gdat["alarmTm"] = ""+ parseInt(gdat["alarmTm"])+5;
+    alms.pause();
+    alms.currentTime = 0;
+    setStatus(1);
+  });
  
   
   // Modal close handler
@@ -148,6 +155,7 @@ function startClock(){
     alm_h = gdat["alarmTm"].slice(0,2);
     alm_m = gdat["alarmTm"].slice(3,5);
     alm_tm = alm_h+alm_m;
+    console.log(alm_tm);
     if(alm_tm == (""+h+m)){
       alarm();      // Start alarm sequence
     }
