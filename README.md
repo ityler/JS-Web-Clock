@@ -8,5 +8,8 @@ TO DO:
 -- Mobile
 
 - Timer
+-- Simple timer with visual countdown. 
+-- Standard alarm tone played
+
 -- Unit conversions
 
