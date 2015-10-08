@@ -128,6 +128,30 @@ $(document).ready(function() {
   });
   $(window).resize();
 
+  // Set and initalize timer
+  $('#set-tmr').click(function(){
+
+    function startTimer(duration) {
+      var timer = duration, minutes, seconds;
+      setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+    
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        
+        display.text(minutes + ":" + seconds);
+
+        if (--timer < 0) {
+          timer = duration;
+        }
+      }, 1000);
+    };
+    var display = $("#tmr-disp");
+    $(function($){
+      startTimer(60);
+    });
 });
 
 
@@ -282,7 +306,7 @@ function timerCntl(){
     } 
     os += "</select>";   
   }
-  os += "</form></div>";
+  os += "</form><button id='set-tmr'></button><span id='tmrDisp'></span></div>";
   $("#control").addClass("tmr"); // Control has timer class
   $("#control").html(os); // Append to DOM
 };
