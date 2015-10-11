@@ -9,14 +9,14 @@ $(document).ready(function(){
 
   // Alarm select handler
   $("#btn-alarm").click(function(){
-    $("#btn-control").empty();          // Clear control(direction) area
+  $("#btn-control").empty();          // Clear control(direction) area
     addBtn("btn-reset");
     alarmCntl();
   });
 
   // Timer click handler
   $("#btn-timer").click(function(){
-    $("#btn-control").empty();          // Clear control(direction) area
+  $("#btn-control").empty();          // Clear control(direction) area
     addBtn("btn-reset");
     timerCntl();
   });
@@ -58,14 +58,14 @@ $(document).ready(function(){
   });
   $(window).resize();
 
+});
   // Set and initalize timer
+/*
   $('#set-tmr').click(function(){
     var x = 30;
     startTimer(x);
   });
 
-
-// Start timer loop routine
 function startTimer(duration) {
   var timer = duration, minutes, seconds;
   setInterval(function(){
@@ -85,6 +85,7 @@ var display = $("#tmr-disp");
 $(function($){
   startTimer(60);
 });
+*/
 
 
 
@@ -119,10 +120,10 @@ function startClock(){
   $("#date").children('h3').text(tdy);
   $("#real-time-clock").children('h1').text(h +":"+m+":"+s);
   var t = setTimeout(function(){startClock()},500);
-}
+};
 
 // Choose alarm controller  
-function alarmCntl() {
+function alarmCntl(){
   var os = '<div class="input-group clockpicker">\
               <input type="text" class="form-control ns" value="06:32">\
               <span class="input-group-addon">\
@@ -238,7 +239,7 @@ function timerCntl(){
     } 
     os += "</select>";   
   }
-  os += "</form><button id='set-tmr'></button><span id='tmrDisp'></span></div>";
+  os += "</form></div>";
   $("#control").addClass("tmr"); // Control has timer class
   $("#control").html(os); // Append to DOM
 };
