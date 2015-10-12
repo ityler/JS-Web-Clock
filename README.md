@@ -12,3 +12,7 @@ TO DO:
 
 -- Unit conversions
 -- Sound choices
+
+Next:
+- Snooze accuracy
+- Linear day counts

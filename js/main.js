@@ -35,7 +35,7 @@ $(document).ready(function(){
 
   // Snooze click handler
   $(".modal-snz").click(function(){
-    gdat["alarmTm"] = ""+ parseInt(gdat["alarmTm"])+5;
+    gdat["alarmTm"] = ""+ parseInt(gdat["alarmTm"]+5); // Not going to work this way at all
     alms.pause();
     alms.currentTime = 0;
     setStatus(1);
@@ -160,10 +160,8 @@ function alarm(){
 function showModal(){
   var at =  ("<div class='modal-overlay modal-close'></div>");
   $("body").append(at);
-  console.log("Appended");
   $(".modal-overlay").fadeTo(500, 0.7);
   $('#popup').fadeIn($(this).data());
-  console.log("Fadein");
   gdat["alarmOn"] = 0;
 };  
 
