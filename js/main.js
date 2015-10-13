@@ -35,7 +35,8 @@ $(document).ready(function(){
 
   // Snooze click handler
   $(".modal-snz").click(function(){
-    gdat["alarmTm"] = ""+ parseInt(gdat["alarmTm"]+5); // Not going to work this way at all
+    //gdat["alarmTm"] = ""+ parseInt(gdat["alarmTm"]+5); // Not going to work this way at all
+    updTm(gdat["alarmTm"],5);
     alms.pause();
     alms.currentTime = 0;
     setStatus(1);
@@ -211,8 +212,6 @@ function checkClock(i) {
   return i;
 };
 
-/* NOT CURRENTLY USED */
-
 // Not currently used (12 hour clock conversion)
 function fmtHr(h_24) {
     var h = h_24 % 12;
@@ -242,3 +241,33 @@ function timerCntl(){
   $("#control").html(os); // Append to DOM
 };
 
+
+// Modify time string
+// x - Time 
+// y - Interval
+function updTm(x,y){
+  var tm_h = x.substring(0,2);    // Curent hour
+  var tm_m = x.substring(3,5);    // Current minute
+  var incr = y;                   // Increment 
+  if((tm_m+incr) == 60){          // New hour
+    tm_h = chkHr(tm_h);           // Set hour
+    tm_m = 0;                     // Reset minute
+  } else {
+    tm_m = tm_m + incr;           // Set new minute           
+  }
+  console.log("Hour: "+tm_h);
+  console.log("Min: "+tm_m);
+
+  return tm_h+tm_m;
+
+  function chkHr(x){
+    x++;
+    if(x == 24){
+      x = 0;
+    } else {
+      x++;
+    }
+    return x;
+  };
+
+};
