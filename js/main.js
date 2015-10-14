@@ -28,25 +28,27 @@ $(document).ready(function(){
 
   $(".modal-close").click(function(){
     gdat["alarmSet"] = 0;
-    alms.pause();
-    alms.currentTime = 0;
+    alms.pause();         // Stop sound
+    alms.currentTime = 0; // Current playback reset
     setStatus(0);         // Clear alarm display status
   });
 
   // Snooze click handler
   $(".modal-snz").click(function(){
-    //gdat["alarmTm"] = ""+ parseInt(gdat["alarmTm"]+5); // Not going to work this way at all
-    updTm(gdat["alarmTm"],5);
+    gdat["alarmTm"] = updTm(gdat["alarmTm"],1);
     alms.pause();
     alms.currentTime = 0;
     setStatus(1);
+    $(".modal-box, .modal-overlay").fadeOut(500, function() {
+      $(".modal-overlay").remove();
+    });
+    gdat["alarmOn"] = 1;  // Set alarm active
   });
  
   
   // Modal close handler
   $(".modal-close, .modal-overlay").click(function() {
     $(".modal-box, .modal-overlay").fadeOut(500, function() {
-      $(".modal-overlay").remove();
     });
   });
   
@@ -246,8 +248,8 @@ function timerCntl(){
 // x - Time 
 // y - Interval
 function updTm(x,y){
-  var tm_h = x.substring(0,2);    // Curent hour
-  var tm_m = x.substring(3,5);    // Current minute
+  var tm_h = parseInt(x.substring(0,2));    // Curent hour
+  var tm_m = parseInt(x.substring(3,5));    // Current minute
   var incr = y;                   // Increment 
   if((tm_m+incr) == 60){          // New hour
     tm_h = chkHr(tm_h);           // Set hour
@@ -258,7 +260,7 @@ function updTm(x,y){
   console.log("Hour: "+tm_h);
   console.log("Min: "+tm_m);
 
-  return tm_h+tm_m;
+  return tm_h+":"+tm_m;
 
   function chkHr(x){
     x++;
