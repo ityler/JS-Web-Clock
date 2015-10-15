@@ -102,11 +102,11 @@ function startClock(){
   var h = today.getHours();     // Hours
   var m = today.getMinutes();   // Mins
   var s = today.getSeconds();   // Secs
-  dd = checkClock(dd);          // Format date output
-  mm = checkClock(mm);
+  dd = zeroFmt(dd);          // Format date output
+  mm = zeroFmt(mm);
   tdy = mm+'/'+dd+'/'+yy;     
-  m = checkClock(m);
-  s = checkClock(s);
+  m = zeroFmt(m);
+  s = zeroFmt(s);
   gdat["curTm"] = ""+h+m;
   var alm_h = "";
   var alm_m = "";
@@ -181,25 +181,26 @@ function addBtn(x){
 // Status message control
 function setStatus(x){
   var almDisp = $("#alarm-tm");
+  var stat = $("#status");
   if (x == 0){        // Clear status
     almDisp.find("p").text("Alarm Not Set");
     almDisp.addClass("hdn");
+    stat.find("p").addClass("hdn");
   } else {
-    var stat = $("#status");
-    if (gdat["alarmSet"] == 1){               // Alarm is set
-      $("#btn-reset").removeClass("hdn");     // Enable reset button control  
-      stat.html("<span><p>Alarm Set...</p></span>");
-      stat.addClass("animate fadeInUp");
-      stat.one(ae,function(){
+    if (gdat["alarmSet"] == 1){                     // Alarm is set
+      $("#btn-reset").removeClass("hdn");           // Enable reset button control  
+      stat.html("<span><p>Alarm Set...</p></span>");// Add alarmset text
+      stat.addClass("animate fadeInUp");            // Start animation
+      stat.one(ae,function(){                       // Remove animation
         stat.removeClass("fadeInUp");
         stat.addClass("fadeOut");
-        stat.one(ae,function(){
-          stat.find("p").addClass("hdn")
+        stat.one(ae,function(){                   
+          stat.find("p").addClass("hdn");
           stat.removeClass("fadeOut");
         });
       });
-      almDisp.find("p").text("Alarm Set: "+gdat['alarmTm']);
-      almDisp.removeClass("hdn"); 
+      almDisp.find("p").text("Alarm Set: "+gdat['alarmTm']);  // Set visual alarm time
+      almDisp.removeClass("hdn");                                            
       almDisp.addClass("animate fadeIn");
       almDisp.one(ae,function(){
         almDisp.removeClass("animate fadeIn");
@@ -208,8 +209,8 @@ function setStatus(x){
   }  
 };
 
-// Configure clock appearance (single digits)
-function checkClock(i) {
+// Add leading 0 when needed
+function zeroFmt(i) {
   if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
   return i;
 };
@@ -257,9 +258,6 @@ function updTm(x,y){
   } else {
     tm_m = tm_m + incr;           // Set new minute           
   }
-  console.log("Hour: "+tm_h);
-  console.log("Min: "+tm_m);
-
   return tm_h+":"+tm_m;
 
   function chkHr(x){
@@ -271,5 +269,4 @@ function updTm(x,y){
     }
     return x;
   };
-
 };
