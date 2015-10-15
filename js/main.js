@@ -35,14 +35,14 @@ $(document).ready(function(){
 
   // Snooze click handler
   $(".modal-snz").click(function(){
-    gdat["alarmTm"] = updTm(gdat["alarmTm"],1);
-    alms.pause();
-    alms.currentTime = 0;
-    setStatus(1);
-    $(".modal-box, .modal-overlay").fadeOut(500, function() {
-      $(".modal-overlay").remove();
+    gdat["alarmTm"] = updTm(gdat["alarmTm"],5);// 5 minute snooze
+    alms.pause();                           // Pause alarm sound
+    alms.currentTime = 0;                   // Reset sound playback
+    setStatus(1);                           // Set updated alarm status
+    $(".modal-box, .modal-overlay").fadeOut(500, function() { // Fade out modal
+      $(".modal-overlay").remove();         // Remove modal from DOM
     });
-    gdat["alarmOn"] = 1;  // Set alarm active
+    gdat["alarmOn"] = 1;                    // Set alarm active
   });
  
   
