@@ -6,9 +6,10 @@ TO DO:
 -- Snooze
 -- Mobile
 
-- Timer
+- Timer Control
 -- Simple timer with visual countdown. 
 -- Standard alarm tone played
+-- Count up or down toggle
 
 -- Unit conversions
 -- Sound choices
